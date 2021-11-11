@@ -1,0 +1,2 @@
+spring-mvc-trace-tag=com.kingsoft.skywalking.plugin.SpringMvcInstrumentation
+spring-mvc-trace-tag=com.kingsoft.skywalking.plugin.SpringMvcInstrumentation4Rest
