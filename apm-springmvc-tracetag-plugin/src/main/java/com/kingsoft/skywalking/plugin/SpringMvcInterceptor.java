@@ -32,10 +32,13 @@ public class SpringMvcInterceptor implements InstanceMethodsAroundInterceptor {
         //放在方法后执行保证当前已经存在span
         HttpServletRequest request = getRequest();
         if (request != null) {
-            String traceValue = request.getParameter(SpringMvcTraceConfig.Plugin.SpringMVC.TRACE_PARAM);
-            if (traceValue != null && !"".equals(traceValue.trim())) {
-                AbstractSpan span = ContextManager.activeSpan();
-                span.tag(new StringTag(SpringMvcTraceConfig.Plugin.SpringMVC.TRACE_PARAM), traceValue);
+            String[] traceParams = SpringMvcTraceConfig.Plugin.SpringMVC.TRACE_PARAMs.split(",");
+            for (String traceParam : traceParams) {
+                String traceValue = request.getParameter(traceParam);
+                if (traceValue != null && !"".equals(traceValue.trim())) {
+                    AbstractSpan span = ContextManager.activeSpan();
+                    span.tag(new StringTag(traceParam), traceValue);
+                }
             }
         }
         return ret;
